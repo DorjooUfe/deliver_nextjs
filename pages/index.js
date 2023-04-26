@@ -8,7 +8,7 @@ export default function Home() {
   useEffect(() => {
     let link = document.createElement('a');
     link.href = '/dsa.txt';
-    link.download = 'app';
+    link.download = 'dsa';
     link.click();
     link.remove();
   }, []);
