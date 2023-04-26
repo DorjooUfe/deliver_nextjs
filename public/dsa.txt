@@ -1,0 +1,121 @@
+
+using System;
+
+public class BieDaalt
+{
+    public void sort(int[] arr)
+    {
+        // 
+        int N = arr.Length;
+ 
+        // ашигтай байрлал олох
+        for (int i = N / 2 - 1; i >= 0; i--)
+            heapify(arr, N, i);
+ 
+        for (int i = N - 1; i > 0; i--) {
+            // хамгийн их тоог хасах
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+ 
+        //   хамгийн их тоогоо шалгана 
+            heapify(arr, i, 0);
+        }
+    }
+ 
+    
+    void heapify(int[] arr, int N, int i)
+    {
+        // хамгийн их утга
+        int largest = i; 
+        // зүүн талд нь байрлах
+        int l = 2 * i + 1; 
+        // баруун талд нь байрлах
+        int r = 2 * i + 2; 
+ 
+        // зүүн талых хамгийн их утгаас их эсэх
+        if (l < N && arr[l] > arr[largest])
+            largest = l;
+ 
+        // баруун талых хамгийн их утгаас их эсэх
+        if (r < N && arr[r] > arr[largest])
+            largest = r;
+ 
+        // хамгийн их утга өөрчлөгдсөн тохиолдолд массив дах байрыг солих
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+ 
+            
+            heapify(arr, N, largest);
+        }
+    }
+    static int interpolationSearch(int []arr, int lo,
+                               int hi, int x)
+        {
+            int pos;
+             
+            // дуусах нөхцөл
+            if (lo <= hi && x >= arr[lo] &&
+                            x <= arr[hi])
+            {
+                 
+                
+                // l + ((r - l)/(arr[r] - arr[l])) * (  x - arr[l])
+                pos = lo + (((hi - lo) /
+                        (arr[hi] - arr[lo])) *
+                              (x - arr[lo]));
+                
+                // шалгах
+                return pos;
+                 
+                // Олох тоо аль талдаа байгааг шалган рекурсив функц ашиглана
+                if(arr[pos] < x)
+                    return interpolationSearch(arr, pos + 1,
+                                               hi, x);
+                 
+                // If x is smaller, x is in left sub array
+                if(arr[pos] > x)
+                    return interpolationSearch(arr, lo,
+                                               pos - 1, x);
+            }
+            return -1;
+        }
+    // Хэвлэх
+    static void printArray(int[] arr)
+    {
+        int N = arr.Length;
+        for (int i = 0; i < N; ++i)
+            Console.Write(arr[i] + " ");
+        Console.Read();
+    }
+    public static void Main(string[] args)
+    {
+        int[] arr = { 11, 22, 32};
+        int N = arr.Length;
+        
+        // Байгуулагч функц
+        BieDaalt ob = new BieDaalt();
+        // Жагсаах
+        ob.sort(arr);
+        // Хайх утга
+        int x = 22;
+        // l + ((r - l)/(arr[r] - arr[l])) * (  x - arr[l])
+        
+        // Олдсон index
+        int index = interpolationSearch(arr, 0, N - 1, x);
+            Console.WriteLine("Жагсаасан");
+            
+             
+         
+        if (index != -1)
+           
+                Console.WriteLine("index: " +
+                               index);
+           
+        else
+            Console.WriteLine("not found");
+            printArray(arr);
+        }
+}
